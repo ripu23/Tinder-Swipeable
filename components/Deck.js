@@ -25,19 +25,27 @@ const Deck = ({ data, renderCard }) => {
     ).current
 
     const renderCards = () => {
-        return data.map((item) => {
+        return data.map((item, index) => {
+            if (index === 0) {
+                return (
+                    <Animated.View
+                        key={item.id}
+                        style={position.getLayout()}
+                        {...panResponder.panHandlers}
+                    >
+                        {renderCard(item)}
+                    </Animated.View>
+                );
+            }
             return renderCard(item);
         })
     }
 
     return (
         <Screen style={styles.container}>
-            <Animated.View
-                style={position.getLayout()}
-                {...panResponder.panHandlers}
-            >
+            <View>
                 {renderCards()}
-            </Animated.View>
+            </View>
         </Screen>
     );
 }
