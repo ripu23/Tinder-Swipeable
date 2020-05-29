@@ -34,11 +34,28 @@ export default function App() {
     )
   }
 
+  const renderNoMoreCards = () => {
+    return (
+      <Card
+        title='All done!'
+      >
+        <Text style={{ marginBottom: 10 }}>
+          All done!
+        </Text>
+        <Button
+          backgroundColor='tomato'
+          title='Get more'
+        />
+      </Card>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <Deck
         data={DATA}
         renderCard={renderCard}
+        renderNoMoreCards={renderNoMoreCards}
       />
     </View>
   );
