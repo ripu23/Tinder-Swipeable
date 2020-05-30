@@ -1,5 +1,13 @@
-import React, { useRef, useState } from 'react';
-import { StyleSheet, View, PanResponder, Animated, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+    StyleSheet,
+    View,
+    PanResponder,
+    Animated,
+    Dimensions,
+    LayoutAnimation,
+    UIManager
+} from 'react-native';
 
 import Screen from './Screen';
 
@@ -9,8 +17,21 @@ const SWIPE_OUT_DURATION = 250;
 
 const Deck = ({ data, renderCard, onSwipeLeft, onSwipeRight, renderNoMoreCards }) => {
 
+    // This is for slight animation of cards once
+    // the top card is swiped
+    UIManager.setLayoutAnimationEnabledExperimental &&
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    LayoutAnimation.spring();
+
     const position = new Animated.ValueXY();
     const [index, setIndex] = useState(0);
+    const [newData, setNewData] = useState(data);
+    useEffect(() => {
+        if (newData !== data) {
+            setNewData(data);
+            setIndex(0);
+        }
+    }, [data])
 
     const resetPosition = () => {
         Animated.spring(position, {
